@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="blocks/attendtools/db" VERSION="2011096100" COMMENT="XMLDB file for Moodle blocks/attendtools"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="block_attendtools_method" COMMENT="attendance recording method(s)" NEXT="block_attendtools_session">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="title"/>
+        <FIELD NAME="title" TYPE="char" LENGTH="50" NOTNULL="true" SEQUENCE="false" PREVIOUS="id" NEXT="description"/>
+        <FIELD NAME="description" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="title" NEXT="descriptionformat"/>
+        <FIELD NAME="descriptionformat" TYPE="int" LENGTH="2" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="description"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="block_attendtools_session" COMMENT="A (timetabled) session for which attendance is to be monitored" PREVIOUS="block_attendtools_method" NEXT="block_attendtools_attendance">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="courseid"/>
+        <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" COMMENT="FK: course.id" PREVIOUS="id" NEXT="attsessionid"/>
+        <FIELD NAME="attsessionid" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" COMMENT="(opt) FK: attendance_sessions.id (attendance module)" PREVIOUS="courseid" NEXT="sessdate"/>
+        <FIELD NAME="sessdate" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" COMMENT="Session date/time" PREVIOUS="attsessionid" NEXT="duration"/>
+        <FIELD NAME="duration" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" COMMENT="seconds" PREVIOUS="sessdate" NEXT="description"/>
+        <FIELD NAME="description" TYPE="text" LENGTH="small" NOTNULL="true" SEQUENCE="false" PREVIOUS="duration" NEXT="descriptionformat"/>
+        <FIELD NAME="descriptionformat" TYPE="int" LENGTH="2" NOTNULL="true" UNSIGNED="false" DEFAULT="0" SEQUENCE="false" PREVIOUS="description" NEXT="methodid"/>
+        <FIELD NAME="methodid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" COMMENT="FK: block_attendtools_method.id" PREVIOUS="descriptionformat" NEXT="codeseed"/>
+        <FIELD NAME="codeseed" TYPE="char" LENGTH="100" NOTNULL="false" SEQUENCE="false" COMMENT="(method code) (hopefully) secure random 'seed' for code generation" PREVIOUS="methodid" NEXT="codeseqsize"/>
+        <FIELD NAME="codeseqsize" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" COMMENT="(method code) - number allocated in sequence (excluding excluded)" PREVIOUS="codeseed" NEXT="codeseqmax"/>
+        <FIELD NAME="codeseqmax" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" COMMENT="(method code) - (opt) max sequence number allowed (excluding excluded)" PREVIOUS="codeseqsize" NEXT="codeseqexclude"/>
+        <FIELD NAME="codeseqexclude" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" COMMENT="(method code) - in-order comma-separated list of excluded sequence numbers" PREVIOUS="codeseqmax" NEXT="maxregtime"/>
+        <FIELD NAME="maxregtime" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" COMMENT="latest date/time when attendance can be recorded" PREVIOUS="codeseqexclude" NEXT="printed"/>
+        <FIELD NAME="printed" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" COMMENT="count" PREVIOUS="maxregtime" NEXT="lastprinted"/>
+        <FIELD NAME="lastprinted" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="printed" NEXT="lastprintedby"/>
+        <FIELD NAME="lastprintedby" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="lastprinted"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="block_attendtools_attendance" COMMENT="record of attendance" PREVIOUS="block_attendtools_session" NEXT="block_attendtools_blacklist">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="sessionid"/>
+        <FIELD NAME="sessionid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" COMMENT="FK: block_attendtools_session.id" PREVIOUS="id" NEXT="studentid"/>
+        <FIELD NAME="studentid" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" COMMENT="(opt)" PREVIOUS="sessionid" NEXT="username"/>
+        <FIELD NAME="username" TYPE="char" LENGTH="100" NOTNULL="true" SEQUENCE="false" PREVIOUS="studentid" NEXT="methodid"/>
+        <FIELD NAME="methodid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" COMMENT="FK: block_attendtools_method.id" PREVIOUS="username" NEXT="present"/>
+        <FIELD NAME="present" TYPE="int" LENGTH="4" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" COMMENT="(bool)" PREVIOUS="methodid" NEXT="timetaken"/>
+        <FIELD NAME="timetaken" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="present" NEXT="takenby"/>
+        <FIELD NAME="takenby" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="timetaken" NEXT="remarks"/>
+        <FIELD NAME="remarks" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" PREVIOUS="takenby" NEXT="codeseq"/>
+        <FIELD NAME="codeseq" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" COMMENT="(method code) (excluding excluded)" PREVIOUS="remarks" NEXT="codecode"/>
+        <FIELD NAME="codecode" TYPE="char" LENGTH="100" NOTNULL="false" SEQUENCE="false" PREVIOUS="codeseq" NEXT="codeused"/>
+        <FIELD NAME="codeused" TYPE="int" LENGTH="4" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="codecode"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="sessionid_ix" UNIQUE="false" FIELDS="sessionid" NEXT="codecode_ix"/>
+        <INDEX NAME="codecode_ix" UNIQUE="false" FIELDS="codecode" PREVIOUS="sessionid_ix"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="block_attendtools_blacklist" COMMENT="block/blacklist (error) information for code method(s)" PREVIOUS="block_attendtools_attendance">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="sessionid"/>
+        <FIELD NAME="sessionid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" COMMENT="FK: block_attendtools_session.id" PREVIOUS="id" NEXT="username"/>
+        <FIELD NAME="username" TYPE="char" LENGTH="100" NOTNULL="false" SEQUENCE="false" PREVIOUS="sessionid" NEXT="time"/>
+        <FIELD NAME="time" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="username" NEXT="ipaddress"/>
+        <FIELD NAME="ipaddress" TYPE="char" LENGTH="30" NOTNULL="false" SEQUENCE="false" COMMENT="dotted decimal" PREVIOUS="time"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="time_ix" UNIQUE="false" FIELDS="time" NEXT="sessionid_ix"/>
+        <INDEX NAME="sessionid_ix" UNIQUE="false" FIELDS="sessionid" PREVIOUS="time_ix" NEXT="ipaddress_ix"/>
+        <INDEX NAME="ipaddress_ix" UNIQUE="false" FIELDS="ipaddress" PREVIOUS="sessionid_ix" NEXT="username_ix"/>
+        <INDEX NAME="username_ix" UNIQUE="false" FIELDS="username" PREVIOUS="ipaddress_ix"/>
+      </INDEXES>
+    </TABLE>
+  </TABLES>
+</XMLDB>
