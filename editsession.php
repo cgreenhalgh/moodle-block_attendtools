@@ -75,7 +75,7 @@ class session_form extends moodleform {
 // session id (0 for add)
 $id = required_param('id', PARAM_INT);
 
-$path = '/blocks/attendtools/session.php';
+$path = '/blocks/attendtools/editsession.php';
 $urlparams = array('id'=>$id);
 
 $baseurl = new moodle_url($path, $urlparams);
@@ -109,15 +109,17 @@ if ($mform->is_cancelled()) {
 	//$data->descriptionformat = $data->description_editor['format'];
 	
 	if ($data->id) {
-		debugging('edit session '.var_export($data, true));
+		//debugging('edit session '.var_export($data, true));
 		$DB->update_record('block_attendtools_session', $data);
-		redirect($baseurl);
+		//redirect($baseurl);
+		redirect($CFG->wwwroot . '/blocks/attendtools/managesessions.php');		
 	}
 	else {
 		//debugging('add session');
 		$data->id = $DB->insert_record('block_attendtools_session', $data);
 		$urlparams['id'] = $data->id;
-		redirect(new moodle_url($path, $urlparams));
+		//redirect(new moodle_url($path, $urlparams));
+		redirect($CFG->wwwroot . '/blocks/attendtools/managesessions.php');	
 	}
 	
 } else {

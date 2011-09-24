@@ -23,7 +23,7 @@ class block_attendtools extends block_base {
 
 		$this->content         =  new stdClass;
 		$regurl = new moodle_url('/blocks/attendtools/reg.php');
-		$this->content->text   = '<a href="'.$regurl.'">Register attendance code</a>';
+		$this->content->text   = '<a href="'.$regurl.'" target="_blank">Register attendance code</a>';
 		//$this->content->footer = 'Footer here...';
 
 		return $this->content;

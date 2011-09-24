@@ -52,7 +52,7 @@ $strtitle = get_string('regtitle', 'block_attendtools');
 $PAGE->set_title($strtitle);
 $PAGE->set_heading($strtitle);
 
-$mform = new reg_form(new moodle_url($path, $urlparams));
+$mform = new reg_form(new moodle_url($path));
 
 global $DB;
 
@@ -85,14 +85,27 @@ if ($mform->is_cancelled()) {
 				} else if ($attendance->codeused) {
 					echo '<p>'.get_string('codealreadyused', 'block_attendtools').'</p>';				
 				} else {
-					// OK
-					$attendance->codeused = 1;
-					$attendance->username = $data->username;
-					$attendance->present = 1;
-					$attendance->timetaken = time();
-					$DB->update_record('block_attendtools_attendance', $attendance);
-					
-					echo '<p>'.get_string('codeok', 'block_attendtools').'</p>';				
+					$session = $DB->get_record('block_attendtools_session', array('id'=>$attendance->sessionid));
+					if ($session && $session->codeseqmax!==null && $attendance->codeseq>$session->codeseqmax) {
+						echo '<p>'.get_string('codeexceedsmax', 'block_attendtools').'</p>';						
+					} else if ($session && $session->maxregtime && time()>$session->maxregtime) {
+						echo '<p>'.get_string('codetoolate', 'block_attendtools').'</p>';						
+					} else {
+						if ($DB->count_records('block_attendtools_attendance', array('sessionid'=>$data->sessionid,'username'=>$data->username)))
+						{
+							echo '<p>'.get_string('alreadyregistered', 'block_attendtools').'</p>';								
+						}						
+						else {
+							// OK
+							$attendance->codeused = 1;
+							$attendance->username = $data->username;
+							$attendance->present = 1;
+							$attendance->timetaken = time();
+							$DB->update_record('block_attendtools_attendance', $attendance);
+							
+							echo '<p>'.get_string('codeok', 'block_attendtools').'</p>';				
+						}
+					}
 				}
 			} else {
 				if (!$DB->count_records('block_attendtools_session', array('id'=>$data->sessionid)))

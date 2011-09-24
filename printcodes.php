@@ -44,7 +44,7 @@ if ($confirm!=$confirmhash) {
 	$confirmurl = new moodle_url($path,array('id'=>$id,'confirm'=>$confirmhash));
 	if ($session->printed) {
 		// fix me- user name
-		$lastprintedby = 'user '.$session->lastprintedby;
+		$lastprintedby = get_print_username($session->lastprintedby);
 		$strparams = new stdClass();
 		$strparams->printed = $session->printed;
 		$strparams->lastprinted = userdate($session->lastprinted);
@@ -97,7 +97,10 @@ else {
 			debugging('insert code '.var_export($code,true));
 			$code->id = $DB->insert_record('block_attendtools_attendance', $code);
 		}		
-		echo '<tr><td>'.$registerurl.'&nbsp;'.get_string('regsessionid','block_attendtools').':&nbsp;<span>'.$code->sessionid.'</span>&nbsp;'.get_string('regcode','block_attendtools').':&nbsp;<span>'.$code->codecode.'</span>&nbsp;('.$seq.'/'.$max.', ',$session->description.')</td></tr>';
+		if ($code->codeused) 
+			echo '<tr><td>WARNING: code already used&nbsp;('.$seq.'/'.$max.', ',$session->description.')</td></tr>';
+		else		
+			echo '<tr><td>'.$registerurl.'&nbsp;'.get_string('regsessionid','block_attendtools').':&nbsp;<span>'.$code->sessionid.'</span>&nbsp;'.get_string('regcode','block_attendtools').':&nbsp;<span>'.$code->codecode.'</span>&nbsp;('.$seq.'/'.$max.', ',$session->description.')</td></tr>';
 	}	
 	echo '</table>';
 	
@@ -105,5 +108,7 @@ else {
 	$session->lastprinted = time();
 	$session->lastprintedby = $USER->id;
 	$DB->update_record('block_attendtools_session', $session);
+	
+	echo '<p>Printed copy '.$session->printed.', by '.get_print_username($session->lastprintedby).' at '.userdate($session->lastprinted).'</p>';
 }
 echo $OUTPUT->footer();

@@ -36,3 +36,12 @@ function get_code($input) {
 	//debugging('sha1 '.$input.' -> '.bin2hex($sha1).' -> '.$out);
 	return $out;
 }
+
+function get_print_username($id) {
+	global $DB;
+	
+	$user = $DB->get_record('user', array('id'=>$id));
+	if ($user) 
+		return $user->lastname.', '.$user->firstname.' ('.$user->username.')';
+	return get_string('unknownuser', 'block_attendtools', $id);
+}

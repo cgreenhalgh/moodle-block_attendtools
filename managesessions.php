@@ -29,7 +29,7 @@ $settingsurl = new moodle_url('/admin/settings.php?section=blocksettingattendtoo
 $managesessions = new moodle_url($path); //, $urlparams);
 $PAGE->navbar->add(get_string('blocks'));
 $PAGE->navbar->add(get_string('pluginname', 'block_attendtools'), $settingsurl);
-$PAGE->navbar->add(get_string('managesessions', 'block_attendtools'), $manageorgdataurl);
+$PAGE->navbar->add(get_string('managesessions', 'block_attendtools'), $managesessions);
 echo $OUTPUT->header();
 
 // Do something useful...
@@ -78,7 +78,7 @@ foreach ($sessions as $session) {
 echo '</table>';
 // add session button
 $options = array('id'=>0);
-echo $OUTPUT->single_button(new moodle_url('/blocks/attendtools/session.php', $options), get_string('addsession', 'block_attendtools'));
+echo $OUTPUT->single_button(new moodle_url('/blocks/attendtools/editsession.php', $options), get_string('addsession', 'block_attendtools'));
 
 echo $OUTPUT->footer();
 
