@@ -100,7 +100,7 @@ else {
 		if ($code->codeused) 
 			echo '<tr><td>WARNING: code already used&nbsp;('.$seq.'/'.$max.', ',$session->description.')</td></tr>';
 		else		
-			echo '<tr><td>'.$registerurl.'&nbsp;'.get_string('regsessionid','block_attendtools').':&nbsp;<span>'.$code->sessionid.'</span>&nbsp;'.get_string('regcode','block_attendtools').':&nbsp;<span>'.$code->codecode.'</span>&nbsp;('.$seq.'/'.$max.', ',$session->description.')</td></tr>';
+			echo '<tr class="block_attendtools_code"><td>'.get_string('regsessionid','block_attendtools').':&nbsp;<span class="block_attendtools_code_big">'.$code->sessionid.'</span>&nbsp;'.get_string('regcode','block_attendtools').':&nbsp;<span class="block_attendtools_code_big">'.$code->codecode.'</span><br>'.$registerurl.'&nbsp;('.$seq.'/'.$max.', ',$session->description.')</td></tr>';
 	}	
 	echo '</table>';
 	
