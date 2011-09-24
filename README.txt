@@ -7,18 +7,24 @@ Chris Greenhalgh (Computer Science), The University of Nottingham
 Copyright 2011, The University of Nottingham
 
 Status:
-	- skeleton plugin
+	- can create sessions
+    - can list sessions
+    - can generate and print codes
+    - can register using code
+    - support for temporary blacklisting to limit exposure to brute force
+    - can view session attendance
+    - can export (CSV) attendance for all sessions
+    - minimal block provides link to registration form
+    (no connections to native moodle functionality, e.g. courses, 
+     or attendance block)
 	
 Next steps:
-    - allow sessions to be created (session form)
-    - allow sessions to be listed (manage sessions)
-    - allow session to be printed (and generate codes)
-    - allow code to be entered
-    - allow attendance to be viewed
-    - blacklisting support
-    - allow attendnace to be exported
+    - allow sessions to be deleted
+    ? allow sessions to be grouped
+    - allow finer-grained permissions for printing, etc. (currently admin)
 	
 Changes:
+    - first version
 
 Design notes:
 	- initial use case works WITHOUT student accounts on Moodle, and WITHOUT 
