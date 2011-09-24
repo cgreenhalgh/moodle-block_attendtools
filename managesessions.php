@@ -57,10 +57,21 @@ global $DB;
 $sessions = $DB->get_records('block_attendtools_session', null, 'sessdate ASC');
 foreach ($sessions as $session) {
 	echo '<tr><td>'.userdate($session->sessdate).'</td><td>'.$session->description.'</td><td>';
-	echo $OUTPUT->action_icon(new moodle_url('/blocks/attendtools/session.php',
+	echo $OUTPUT->action_icon(new moodle_url('/blocks/attendtools/editsession.php',
 											array('id' => $session->id)),
 		new pix_icon('t/edit', get_string('editsession', 'block_attendtools')));
 	
+	echo $OUTPUT->action_icon(new moodle_url('/blocks/attendtools/viewsession.php',
+							array('id' => $session->id)),
+		new pix_icon('t/preview', get_string('viewsession', 'block_attendtools')));
+	
+	$method = $DB->get_record('block_attendtools_method', array('id'=>$session->methodid));
+	if ($method->name=='code') {
+		echo $OUTPUT->action_icon(new moodle_url('/blocks/attendtools/printcodes.php',
+								array('id' => $session->id)),
+			new pix_icon('t/print', get_string('printcodes', 'block_attendtools'), 'block_attendtools'));
+	}
+		
 	echo '</td></tr>';
 }
 

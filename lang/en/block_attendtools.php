@@ -2,6 +2,8 @@
 $string['addsession'] = 'Add session';
 $string['actions'] = 'Actions';
 $string['attendtools:managesessions'] = 'Manage attendance sessions';
+$string['confirmprintcodes1'] = 'Are you sure you want to generate and print the registration codes now?';
+$string['confirmprintcodes2'] = 'Are you sure you want to print the registration codes again (printed \$a->printed times, last by \$a->lastprintedby at \$a->lastprinted)';
 $string['codeseqsize'] = 'Number of codes to generate';
 $string['codeseqmax'] = 'Highest code to accept';
 $string['codeseqmaxset'] = 'Limit accepted codes';
@@ -18,3 +20,5 @@ $string['ok'] = 'OK';
 $string['pluginname'] = 'Attendance tools';
 $string['sessdate'] = 'Session start';
 $string['title'] = 'Attendance tools';
+$string['viewsession'] = 'View session';
+$string['printcodes'] = 'Print codes';

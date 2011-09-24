@@ -1,4 +1,4 @@
 <?php
 
-$plugin->version = 2011096100;  // YYYYMMDDHH (year, month, day, 24-hr time)
+$plugin->version = 2011092700;  // YYYYMMDDHH (year, month, day, 24-hr time)
 $plugin->requires = 2010112400; // YYYYMMDDHH (This is the release version for Moodle 2.0)
