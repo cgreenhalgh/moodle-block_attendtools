@@ -20,6 +20,7 @@ $string['confirmprintcodes2'] = 'Are you sure you want to print the registration
 $string['duration'] = 'Duration';
 $string['description'] = 'Description';
 $string['editsession'] = 'Edit session';
+$string['exportall'] = 'Export attendance for all sessions';
 $string['managesessions'] = 'Manage sessions';
 $string['maxregtimeset'] = 'Time-limit registration';
 $string['maxregtime'] = 'Allow registration until';

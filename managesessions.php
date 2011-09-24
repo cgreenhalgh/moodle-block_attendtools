@@ -79,6 +79,7 @@ echo '</table>';
 // add session button
 $options = array('id'=>0);
 echo $OUTPUT->single_button(new moodle_url('/blocks/attendtools/editsession.php', $options), get_string('addsession', 'block_attendtools'));
+echo $OUTPUT->single_button(new moodle_url('/blocks/attendtools/exportall.php', $options), get_string('exportall', 'block_attendtools'));
 
 echo $OUTPUT->footer();
 
