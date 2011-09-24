@@ -97,7 +97,7 @@ else {
 			debugging('insert code '.var_export($code,true));
 			$code->id = $DB->insert_record('block_attendtools_attendance', $code);
 		}		
-		echo '<tr><td>'.$registerurl.'&nbsp;seq:&nbsp;<span>'.$code->sessionid.'</span>&nbsp;code:&nbsp;<span>'.$code->codecode.'</span>&nbsp;('.$seq.'/'.$max.', ',$session->description.')</td></tr>';
+		echo '<tr><td>'.$registerurl.'&nbsp;'.get_string('regsessionid','block_attendtools').':&nbsp;<span>'.$code->sessionid.'</span>&nbsp;'.get_string('regcode','block_attendtools').':&nbsp;<span>'.$code->codecode.'</span>&nbsp;('.$seq.'/'.$max.', ',$session->description.')</td></tr>';
 	}	
 	echo '</table>';
 	
