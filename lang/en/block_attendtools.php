@@ -1,10 +1,20 @@
 <?php 
+$string['addsession'] = 'Add session';
+$string['actions'] = 'Actions';
 $string['attendtools:managesessions'] = 'Manage attendance sessions';
+$string['codeseqsize'] = 'Number of codes to generate';
+$string['codeseqmax'] = 'Highest code to accept';
+$string['codeseqmaxset'] = 'Limit accepted codes';
 $string['duration'] = 'Duration';
 $string['description'] = 'Description';
+$string['editsession'] = 'Edit session';
 $string['managesessions'] = 'Manage sessions';
 $string['maxregtimeset'] = 'Time-limit registration';
 $string['maxregtime'] = 'Allow registration until';
+$string['method'] = 'Registration method';
+$string['methodcodetitle'] = 'Individual code';
+$string['methodcodedescription'] = 'Each student is given a unique code for each session, which they have to enter after the session to register their attendance';
+$string['ok'] = 'OK';
 $string['pluginname'] = 'Attendance tools';
 $string['sessdate'] = 'Session start';
 $string['title'] = 'Attendance tools';

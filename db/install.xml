@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="blocks/attendtools/db" VERSION="2011096100" COMMENT="XMLDB file for Moodle blocks/attendtools"
+<XMLDB PATH="blocks/attendtools/db" VERSION="20110924" COMMENT="XMLDB file for Moodle blocks/attendtools"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
   <TABLES>
     <TABLE NAME="block_attendtools_method" COMMENT="attendance recording method(s)" NEXT="block_attendtools_session">
       <FIELDS>
-        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="title"/>
-        <FIELD NAME="title" TYPE="char" LENGTH="50" NOTNULL="true" SEQUENCE="false" PREVIOUS="id" NEXT="description"/>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="name"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="50" NOTNULL="true" SEQUENCE="false" COMMENT="internal (code) name of method" PREVIOUS="id" NEXT="title"/>
+        <FIELD NAME="title" TYPE="char" LENGTH="50" NOTNULL="true" SEQUENCE="false" PREVIOUS="name" NEXT="description"/>
         <FIELD NAME="description" TYPE="text" LENGTH="small" NOTNULL="false" SEQUENCE="false" PREVIOUS="title" NEXT="descriptionformat"/>
         <FIELD NAME="descriptionformat" TYPE="int" LENGTH="2" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="description"/>
       </FIELDS>
