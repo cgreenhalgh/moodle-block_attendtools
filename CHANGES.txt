@@ -1,0 +1,7 @@
+Problems:
+
+[Wed Sep 28 11:23:35 2011] [error] [client 128.243.22.74] PHP Notice:  Undefined property: stdClass::$maxregtimeset in /var/www/html/attendtools/blocks/attendtools/editsession.php on line 103, referer: http://teaching.cs.nott.ac.uk/attendtools/blocks/attendtools/editsession.php
+[Wed Sep 28 11:23:35 2011] [error] [client 128.243.22.74] PHP Notice:  Undefined property: stdClass::$codeseqmaxset in /var/www/html/attendtools/blocks/attendtools/editsession.php on line 105, referer: http://teaching.cs.nott.ac.uk/attendtools/blocks/attendtools/editsession.php
+
+Changes:
+
