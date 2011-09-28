@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head><meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>Attendtools User Guide</title></head><body>
+<h1>Attendtools User Guide</h1>
+v1.0, 2011-09-28, Chris Greenhalgh <br>
+School of Computer Science, University of Nottingham<br>
+<h2>Overview</h2>
+<p>This block provides a way to register attendance at a physical <span style="font-style: italic;">session</span> such as a lecture or lab.
+A teacher or administrator uses the session management interface to
+define the session, including the maximum number of attendees. They
+then generate and print than number of paper <span style="font-style: italic;">code slips</span>.  These
+are handed out in the session, one per attendee. Each code slip has the
+session number and a unique code printed on it. After (or during) the
+session, each attendee goes to the registration web page and enters the
+session number, unique code and their own user name. This registers
+their attendance at the session. Afterwards the teacher or
+administrator can view the registered attendees, and export attendance
+data for all sessions.</p>
+<p>The current version does NOT require that students have accounts on
+Moodle, and does NOT link directly to Moodle courses or activities;
+this reflects the current development/deployment situation. It is
+anticipated that future versions could: create missing student accounts
+on registering; enrol students in courses on registering; push
+attendance information to course-specific activities (i.e. the
+Attendance module); provide reports of attendance linked to specific
+Moodle accounts, courses or cohorts. It is also anticipated that other
+methods of registering attendance might be supported in future
+versions, e.g. individual RFID/barcode card registration in the
+session, paper-based sign-up, self-registration.<br>
+</p>
+<h3>Discussion</h3>
+<p>Each code can only be used once, so provided only (say) 10 codes are
+handed out to 10 attendees then only 10 attendances can be registered.</p>
+<p>An attendee can give their (unused) code to someone else, who can
+register as attending. An attendee can also provide someone else's user
+name when registering.However the attendee is then unable to register their own attendance. </p>
+<p>If an attendee loses their code or forgets about it then their attendance will not be registered.</p>
+<p>Consequently, the effectiveness of the system depends on balanced incentives (a) for attendees to register their <span style="font-style: italic;">own</span>
+attendance (b) but without creating a significant market for unused
+codes (i.e. where claimed attendance might be much more valuable to
+some non-attendees than to some attendees). <br>
+</p>
+<h2>Availability</h2>
+<p>The source for the block is currently available from: <a href="https://github.com/cgreenhalgh/moodle-block_attendtools">https://github.com/cgreenhalgh/moodle-block_attendtools</a>.</p>
+<p>It is currently being developed/tested with Moodle version 2.1.</p>
+<h2>Installation</h2>
+<p>Installation is standard, i.e. <br>
+</p>
+<ul>
+  <li>download the complete source (above) and move/rename to the folder <span style="font-family: monospace;">blocks/attendtools</span> within the moodle installation.</li>
+  <li>as administrator, view the Site administration &gt; Notifications page, and press Upgrade when prompted.</li>
+</ul>
+<h2>Configuration and management<br>
+</h2>
+<p>Configuration and management currently requires the capability <span style="font-family: monospace;">block/attendtools:managesessions</span>, which is associated with the admin role (only) by default.<br>
+</p>
+The block has a configuration screen in the admin menu:<br>
+<img style="width: 929px; height: 656px;" alt="" src="admin-menu.png"><br>
+<p>Currently there are no common block settings, but a link to a page for managing sessions:</p>
+<img style="width: 940px; height: 656px;" alt="" src="settings.png">
+<p>Optionally, an instance of the attendtools block can be added to the
+site, e.g. to the default My Moodle page. This just provides a link to
+the register attendance page.<br>
+</p>
+
+<p><img style="width: 940px; height: 656px;" alt="" src="block.png"><br>
+</p>
+
+<p>The manage settings page lists the existing settings, and provides links to actions: <br>
+</p>
+<ul>
+  <li>edit a session</li>
+  <li>view information about a session (including attendance)</li>
+  <li>print the codes for a session</li>
+  <li>add a new session</li>
+  <li>export attendance information for all sessions</li>
+</ul>
+<img style="width: 940px; height: 656px;" alt="" src="managesessions.png"><br>
+The add/edit session screen allows a session (i.e. at which attendance will be monitored) to be set up:<br>
+<img src="file:///C:/Users/cmg/AppData/Local/Temp/moz-screenshot-1.jpg" alt=""><img style="width: 940px; height: 656px;" alt="" src="addsession.png"><br>
+A session is specified by:<br>
+<ul>
+  <li>description, i.e. a generally meaningful title for the session (as far as attendance monitoring is concerned)</li>
+  <li>the date and time of the session<br>
+  </li>
+  <li>the session duration (not actually used at present, but included for future compatibility with the Attendance module)</li>
+  <li>an optional date/time after which attendance at the session <span style="font-style: italic;">cannot</span> be registered</li>
+  <li>the method of registering attendance, currently only 'Individual code'</li>
+  <li>and, specifically for the Individual code method:</li>
+  <ul>
+    <li>the number of codes to generate, i.e. the maximum number of people who might attend the session</li>
+    <li>an optional (lower) cap on the codes that will be accepted
+(e.g. if 200 are printed, but only the first 120 are given out then
+this should be set after the session to 120)</li>
+  </ul>
+</ul>
+The session view gives summary information about the session and the list of currently registered attendees:<br>
+&nbsp;<img style="width: 940px; height: 656px;" alt="" src="viewsession.png"><br>
+The print codes option first shows a confirmation dialog, which is
+different for the first time codes are printed (and generated) vs
+subsequent occasions:<br>
+<p>Optionally, an instance of the attendtools block can be added to the site, e.g. to the default My Moodle page:</p>
+
+<p><br>
+</p>
+
+<img style="width: 940px; height: 656px;" alt="" src="printcodesconfirm.png"><br>
+This is because each code can only be used once, so if the same codes
+are printed more than once and two people end up with the same code
+then only one of them will be able to register. So great care must be
+taken that codes are only printed and distributed once!<br>
+The printable codes look like this:<br>
+<img style="width: 940px; height: 656px;" alt="" src="printcodes.png"><br>
+These should be printed, cut into separate strips, and handed out, one per attendee (and preferably in order) in the session.<br>
+<h2>Registering attendance</h2>
+<p>The URL for the register attendance page is printed on each code
+slip and also provided in the attendtools block (if added to the site -
+see above).</p>
+<p>To register attendance, a students does NOT need an account on the Moodle server.<br>
+</p>
+<p>This is a simple form which requires:</p>
+<ul>
+  <li>the session number - from the printed code slip</li>
+  <li>the code - from the printed code slip</li>
+  <li>the student's user name</li>
+</ul>
+<img style="width: 940px; height: 656px;" alt="" src="register.png"><br>
+On successful registration a confirmation message is given:<br>
+<img style="width: 940px; height: 656px;" alt="" src="registered.png"><br>
+A variety of checks are made, which can result in several other responses:<br>
+<ul>
+  <li>Thank you, you have already registered your attendance using this code</li>
+  <li>Thank you, you have already registered your attendance using another code</li>
+  <li>Sorry, this code has already been used by someone else</li>
+  <li>Sorry, this code has been stopped by the teacher (if its sequence
+number is greater than optional maximum specified when creating/editing
+the session)</li>
+  <li>Sorry, it is too late to register attendance at this session (if it is after the optional latest registration date/time)</li>
+</ul>
+The system also tracks entry of incorrect codes, and temporarily blocks
+usernames and ipaddresses if they are used with several incorrect codes
+in a short period of time (e.g. if someone is trying to guess a valid
+code):<br>
+<ul>
+  <li>Sorry, this username has been used in several recent incorrect
+registration attempts and is termporarily blocked; please try again in
+about 10 minutes</li>
+  <li>Sorry, this computer has been used in several recent incorrect
+registration attempts and is termporarily blocked; please try again in
+about 10 minutes<br>
+  </li>
+</ul>
+<h2>Known issues</h2>
+<ul>
+  <li>Sessions cannot be deleted from the user interface</li>
+  <li>A student could mistype their username<br>
+  </li>
+</ul>
+<h2>History</h2>
+<ul>
+  <li>First version, 2011-09-28, by Chris Greenhalgh, School of Computer Science, The University of Nottingham<br>
+  </li>
+</ul>
+<br>
+</body></html>
