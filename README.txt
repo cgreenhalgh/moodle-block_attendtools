@@ -25,6 +25,8 @@ Next steps:
 	
 Changes:
     - first version
+    - site-wide option to require login to register
+    - output student names (where known)
 
 Design notes:
 	- initial use case works WITHOUT student accounts on Moodle, and WITHOUT 

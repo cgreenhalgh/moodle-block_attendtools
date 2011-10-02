@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="blocks/attendtools/db" VERSION="2011092701" COMMENT="XMLDB file for Moodle blocks/attendtools"
+<XMLDB PATH="blocks/attendtools/db" VERSION="2011100400" COMMENT="XMLDB file for Moodle blocks/attendtools"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
@@ -33,7 +33,8 @@
         <FIELD NAME="maxregtime" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" COMMENT="latest date/time when attendance can be recorded" PREVIOUS="codeseqexclude" NEXT="printed"/>
         <FIELD NAME="printed" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" COMMENT="count" PREVIOUS="maxregtime" NEXT="lastprinted"/>
         <FIELD NAME="lastprinted" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="printed" NEXT="lastprintedby"/>
-        <FIELD NAME="lastprintedby" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="lastprinted"/>
+        <FIELD NAME="lastprintedby" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="lastprinted" NEXT="requirelogin"/>
+        <FIELD NAME="requirelogin" TYPE="int" LENGTH="4" NOTNULL="false" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" COMMENT="Is student login required to register? (bool)" PREVIOUS="lastprintedby"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>

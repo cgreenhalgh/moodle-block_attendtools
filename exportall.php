@@ -28,14 +28,23 @@ header('Pragma: public');
 
 $fp = fopen('php://output', 'w');
 
-$headers = array('username');
+$headers = array('username','firstname','lastname');
 foreach ($sessions as $session) {
 	$headers[] = $session->description;
 }
 fputcsv($fp, $headers);
 
 foreach ($usernames as $username) {
-	$values = array($username);
+	if (empty($username))
+		continue;
+	$user = $DB->get_record('user', array('username'=>$username));
+	$firstname = '';
+	$lastname = '';
+	if ($user) {
+		$firstname = $user->firstname;
+		$lastname = $user->lastname;
+	}
+	$values = array($username,$firstname,$lastname);
 	foreach ($sessions as $session) {
 		$attendance = $DB->get_record('block_attendtools_attendance',array('sessionid'=>$session->id,'username'=>$username));
 		$values[] = $attendance->present;

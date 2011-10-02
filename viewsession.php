@@ -57,12 +57,16 @@ echo '</tr>';
 echo '<tr><td>'.userdate($session->sessdate).'</td><td>'.$session->description.'</td></tr>';
 
 $strusername = get_string('username', 'block_attendtools');
+$strfirstname = get_string('firstname');
+$strlastname = get_string('lastname');
 $strpresent = get_string('present', 'block_attendtools');
 $strtimetaken = get_string('timetaken', 'block_attendtools');
 $strremarks = get_string('remarks', 'block_attendtools');
 
 echo '<table border="0" cellspacing="2" cellpadding="4" class="generalbox boxaligncenter"><tr>';
 echo '<th class="header" scope="col">'.$strusername.'</th>';
+echo '<th class="header" scope="col">'.$strfirstname.'</th>';
+echo '<th class="header" scope="col">'.$strlastname.'</th>';
 echo '<th class="header" scope="col">'.$strpresent.'</th>';
 echo '<th class="header" scope="col">'.$strtimetaken.'</th>';
 echo '<th class="header" scope="col">'.$strremarks.'</th>';
@@ -70,7 +74,14 @@ echo '</tr>';
 
 $attendances = $DB->get_records('block_attendtools_attendance', array('sessionid'=>$id,'present'=>1), 'username ASC');
 foreach ($attendances as $attendance) {
-	echo '<tr><td>'.$attendance->username.'</td><td>'.($attendance->present ? 'P' : 'A').'</td><td>'.userdate($attendance->timetaken).'</td><td>'.$attendance->remarks.'</td></tr>';
+	$user = $DB->get_record('user', array('username'=>$attendance->username));
+	$firstname = '';
+	$lastname = '';
+	if ($user) {
+		$firstname = $user->firstname;
+		$lastname = $user->lastname;
+	}
+	echo '<tr><td>'.$attendance->username.'</td><td>'.$firstname.'</td><td>'.$lastname.'</td><td>'.($attendance->present ? 'P' : 'A').'</td><td>'.userdate($attendance->timetaken).'</td><td>'.$attendance->remarks.'</td></tr>';
 }
 
 echo '</table>';

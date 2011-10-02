@@ -6,8 +6,11 @@ require_once($CFG->libdir . '/formslib.php');
 
 class reg_form extends moodleform {
 
+	private $_requirelogin;
+	
 	// cons
-	function __construct($actionurl) {
+	function __construct($actionurl, $requirelogin) {
+		$this->_requirelogin = $requirelogin;
 		parent::moodleform($actionurl);
 	}
 
@@ -27,10 +30,11 @@ class reg_form extends moodleform {
 		//$mform->addRule('code', null, 'numeric', null, 'client');
 		$mform->addRule('code', null, 'required', null, 'client');
 		
-		$mform->addElement('text', 'username', get_string('regusername', 'block_attendtools'));
+		$username = $mform->addElement('text', 'username', get_string('regusername', 'block_attendtools'));
 		$mform->setType('username', PARAM_TEXT);
-		//$mform->setDefault('codeseqsize', '0');
 		$mform->addRule('username', null, 'required', null, 'client');
+		if ($this->_requirelogin)
+			$username->freeze();
 		
 		// TODO add or edit?
 		$this->add_action_buttons(true, get_string('regok', 'block_attendtools'));
@@ -42,6 +46,11 @@ $path = '/blocks/attendtools/reg.php';
 $baseurl = new moodle_url($path);
 $PAGE->set_url($baseurl);
 
+$config = get_config("block_attendtools");
+$requirelogin = $config->requirelogin;
+if ($requirelogin)
+	require_login();
+
 // system-wide setting(s)
 $context = get_context_instance(CONTEXT_SYSTEM);
 $PAGE->set_context($context);
@@ -52,7 +61,7 @@ $strtitle = get_string('regtitle', 'block_attendtools');
 $PAGE->set_title($strtitle);
 $PAGE->set_heading($strtitle);
 
-$mform = new reg_form(new moodle_url($path));
+$mform = new reg_form(new moodle_url($path), $requirelogin);
 
 global $DB;
 

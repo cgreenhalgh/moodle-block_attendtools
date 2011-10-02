@@ -34,7 +34,7 @@ class session_form extends moodleform {
 		
 		$mform->addElement('duration', 'duration', get_string('duration','block_attendtools'));
 
-		$mform->addElement('checkbox', 'maxregtimeset', '', get_string('maxregtimeset','block_attendtools'));
+		$mform->addElement('checkbox', 'maxregtimeset', get_string('maxregtimeset','block_attendtools'));
 		
 		$mform->addElement('date_time_selector', 'maxregtime', get_string('maxregtime','block_attendtools'));
 		$mform->disabledIf('maxregtime', 'maxregtimeset', 'notchecked');
@@ -49,6 +49,9 @@ class session_form extends moodleform {
 		}
 		$mform->addElement('select', 'methodid', get_string('method', 'block_attendtools'), $methodoptions);
 
+		// This is not yet implemented as a per-session option - just using site default!
+		//$mform->addElement('checkbox', 'requirelogin', get_string('requirelogin','block_attendtools'));
+		
 		// seqsize
 		$mform->addElement('text', 'codeseqsize', get_string('codeseqsize', 'block_attendtools'));
 		$mform->setType('codeseqsize', PARAM_INT);
@@ -57,7 +60,7 @@ class session_form extends moodleform {
 		$mform->disabledIf('codeseqsize', 'methodid', 'neq', $codeid);
 		
 		// seqmax
-		$mform->addElement('checkbox', 'codeseqmaxset', '', get_string('codeseqmaxset','block_attendtools'));
+		$mform->addElement('checkbox', 'codeseqmaxset', get_string('codeseqmaxset','block_attendtools'));
 		$mform->disabledIf('codeseqmax', 'methodid', 'neq', $codeid);
 		
 		$mform->addElement('text', 'codeseqmax', get_string('codeseqmax', 'block_attendtools'));
@@ -96,17 +99,21 @@ $mform = new session_form(new moodle_url($path, $urlparams));
 
 global $DB;
 
+$config = get_config('block_attendtools');
+
 if ($mform->is_cancelled()) {
 	redirect($CFG->wwwroot . '/blocks/attendtools/managesessions.php');	
 } else if ($data=$mform->get_data()) {
 	// handle submit
-	if (!$data->maxregtimeset)
+	if (!isset($data->maxregtimeset) || !$data->maxregtimeset)
 		$data->maxregtime = 0;
-	if (!$data->codeseqmaxset)
+	if (!isset($data->codeseqmaxset) || !$data->codeseqmaxset)
 		$data->codeseqmax = null;
 	//$data->description = $data->sdescription;
 	//$data->description = $data->description_editor['text'];
 	//$data->descriptionformat = $data->description_editor['format'];
+	// This is not yet implemented as a per-session option - just using site default!
+	$data->requirelogin = $config->requirelogin;
 	
 	if ($data->id) {
 		//debugging('edit session '.var_export($data, true));
@@ -138,6 +145,7 @@ if ($mform->is_cancelled()) {
 	else {
 		$strtitle = get_string('addsession', 'block_attendtools');
 		$data = new stdClass;
+		$data->requirelogin = $config->requirelogin;
 	}
 		
 	$PAGE->set_title($strtitle);
